@@ -6,16 +6,13 @@ import {
   SafeAreaView,
   Text,
   View,
-  TouchableOpacity,
   ScrollView,
   Dimensions,
 } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
-import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const [screen, setScreen] = useState(Dimensions.get("window"));
-const navigation=useNavigation();
+
   useEffect(() => {
     const subscription = Dimensions.addEventListener("change", ({ window }) => {
       setScreen(window);
@@ -43,9 +40,7 @@ const navigation=useNavigation();
 
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin:10}}>
           <Text style={{ fontSize: 24, fontWeight: "bold" }}>Merhaba, Zeynep!</Text>
-          <TouchableOpacity  onPress={()=>navigation.navigate("DetailsScreen")} >
-            <Feather name="settings" size={24} color="black"/>
-          </TouchableOpacity>
+         
         </View>
 
 

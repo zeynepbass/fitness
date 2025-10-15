@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import { View, Image, TouchableOpacity } from 'react-native';
-=======
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from "react-native";
 import React from "react";
->>>>>>> dev
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Feather from "@expo/vector-icons/Feather";
@@ -22,7 +16,7 @@ const HomeStack = () => (
     <Stack.Screen
       name="HomeMain"
       component={HomeScreen}
-      options={{ headerShown: false,title:"Ana Sayfa" }}
+      options={{ headerShown: false, title: "Ana Sayfa" }}
     />
     <Stack.Screen
       name="DetailsScreen"
@@ -50,6 +44,15 @@ const BottomTab = () => (
           </View>
         </TouchableOpacity>
       ),
+      headerRight: () => (
+        <TouchableOpacity
+       onPress={() => navigation.navigate("Home", { screen: "DetailsScreen" })}
+
+          style={{ paddingRight: 10 }}
+        >
+          <Feather name="settings" size={24} color="black" />
+        </TouchableOpacity>
+      ),
       headerTitleAlign: "center",
       tabBarItemStyle: {
         justifyContent: "center",
@@ -64,7 +67,7 @@ const BottomTab = () => (
         height: 50,
         borderTopWidth: 0,
         borderRadius: 20,
-        margin: 25
+        margin: 25,
       },
     })}
   >
