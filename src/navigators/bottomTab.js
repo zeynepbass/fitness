@@ -1,4 +1,5 @@
-import { View, Image, TouchableOpacity } from "react-native";
+
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,7 +8,7 @@ import DetailsScreen from "../screens/DetailsScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-
+import { TouchableOpacity ,Text} from "react-native";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ const HomeStack = () => (
     <Stack.Screen
       name="HomeMain"
       component={HomeScreen}
-      options={{ headerShown: false, title: "Ana Sayfa" }}
+      options={{ headerShown: false, title: "" }}
     />
     <Stack.Screen
       name="DetailsScreen"
@@ -24,6 +25,8 @@ const HomeStack = () => (
       options={{
         headerShown: true,
         title: " ",
+        headerShown: true,
+        headerTransparent: true
       }}
     />
   </Stack.Navigator>
@@ -34,14 +37,10 @@ const BottomTab = () => (
     screenOptions={({ navigation }) => ({
       headerTitle: () => (
         <TouchableOpacity onPress={() => navigation.navigate("HomeMain")}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={{
-                uri: "https://png.pngtree.com/png-clipart/20220604/original/pngtree-fitness-gym-logo-png-png-image_7932229.png",
-              }}
-              style={{ width: 70, height: 100, resizeMode: "contain" }}
-            />
-          </View>
+ 
+            <Text style={{color:"white",fontWeight:"bold",fontSize:"20"}}>FitnessApp</Text>
+     
+
         </TouchableOpacity>
       ),
       headerRight: () => (
@@ -50,7 +49,7 @@ const BottomTab = () => (
 
           style={{ paddingRight: 10 }}
         >
-          <Feather name="settings" size={24} color="black" />
+          <Feather name="settings" size={24} color="rgb(145, 185, 24)" />
         </TouchableOpacity>
       ),
       headerTitleAlign: "center",
@@ -60,9 +59,9 @@ const BottomTab = () => (
       },
       headerTransparent: true,
       title: "",
-      tabBarActiveTintColor: "white",
+      tabBarActiveTintColor: "rgb(201, 235, 100)",
       tabBarStyle: {
-        backgroundColor: "black",
+        backgroundColor: "rgb(35, 37, 36)",
         position: "absolute",
         height: 50,
         borderTopWidth: 0,

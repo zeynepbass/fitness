@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from "react";
+
 import {
   SafeAreaView,
   Text,
@@ -9,6 +10,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal"
 const ProfileScreen = () => {
 
@@ -26,7 +28,13 @@ const [open,setOpen]=useState(false)
   const imageSize = Math.min(screen.width, screen.height) * 0.25;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2",padding:20 }}>
+           <LinearGradient
+           colors={['rgb(41,47,25)', 'black']}
+           style={{ flex: 1 }}
+         
+          >
+
+    <SafeAreaView style={{ flex: 1, backgroundColor: "gradient",padding:20 }}>
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",
@@ -47,13 +55,13 @@ const [open,setOpen]=useState(false)
           />
         </TouchableOpacity>
 
-        <Text  style={{ fontSize: 24, fontWeight: "bold" }}>
+        <Text  style={{ fontSize: 24, color:"white"}}>
           Zeynep Baş
         </Text>
         <Text
- style={{ fontSize: 24, fontWeight: "bold",
-            color: "gray",
-            marginBottom: 20,
+ style={{ fontSize: 14, fontWeight: "bold",
+            color: "white",
+            margin: 10,
             textAlign: "center",
           }}
         >
@@ -63,50 +71,57 @@ const [open,setOpen]=useState(false)
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "center",
+            
             width: "100%",
             marginBottom: 20,
           }}
         >
           <View
             style={{
-              backgroundColor: "white",
-              padding: 15,
+              backgroundColor: "rgb(49,49,49)", 
+              borderRadius: 15, padding: 15, 
+
+               margin:5,
               borderRadius: 15,
               alignItems: "center",
-              width: cardWidth,
-              margin:2
+              width: cardWidth
+
             }}
           >
-            <Text>Adım Hedefi</Text>
-            <Text style={{ fontWeight: "bold" }}>10,000</Text>
+            <Text style={{              color:"white"}}>Adım Hedefi</Text>
+            <Text style={{ fontWeight: "bold",color:"white" }}>10,000</Text>
           </View>
 
           <View
             style={{
-              backgroundColor: "white",
-              padding: 15,
+              backgroundColor: "rgb(49,49,49)", 
+              borderRadius: 15, padding: 15, 
+              margin:5,
+
               borderRadius: 15,
               alignItems: "center",
-              width: cardWidth,
-              margin:2
+              width: cardWidth
+ 
             }}
           >
-            <Text>Kalori Hedefi</Text>
-            <Text style={{ fontWeight: "bold" }}>500 kcal</Text>
+            <Text style={{ color:"white" }}>Kalori Hedefi</Text>
+            <Text style={{  fontWeight: "bold",color:"white" }}>500 kcal</Text>
           </View>
         </View>
 
         <TouchableOpacity
           style={{
-            backgroundColor: "black",
-            paddingVertical: 12,
+            backgroundColor: "rgb(201, 235, 100)",
+            borderRadius: 15,
+            padding:15,
+    
             paddingHorizontal: screen.width * 0.1,
-            borderRadius: 25,
+  
           }}
           onPress={()=>setOpen(true)}
         >
-          <Text style={{ color: "white", fontWeight: "bold" }} >
+          <Text style={{ color: "black" }} >
             Hedefleri Düzenle
           </Text>
         </TouchableOpacity>
@@ -114,6 +129,7 @@ const [open,setOpen]=useState(false)
 
       </ScrollView>
     </SafeAreaView>
+</LinearGradient>
   );
 };
 

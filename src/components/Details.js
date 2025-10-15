@@ -1,6 +1,7 @@
 
 
 import { useState } from 'react';
+import { LinearGradient } from "expo-linear-gradient";
 import {
   Text,
   Image,
@@ -51,7 +52,13 @@ const Home = () => {
   console.log("fomdat",formData)
 }
   return (
-  <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+           <LinearGradient
+           colors={['rgb(41,47,25)', 'black']}
+           style={{ flex: 1 }}
+         
+          >
+
+    <SafeAreaView style={{ flex: 1, backgroundColor: "gradient",padding:20 }}>
   <View style={{ flex: 1, paddingVertical: 50 }}>
     <ScrollView
       style={{ flex: 1 }}
@@ -71,7 +78,7 @@ const Home = () => {
         <Text style={styles.noPhotoText}>Fotoğraf seçilmedi</Text>
       )}
 
-      <TouchableOpacity onPress={pickImage} style={styles.photoBtn}>
+      <TouchableOpacity onPress={pickImage}   style={[styles.photoBtn, { width: width * 0.5 }]}>
         <Text style={styles.photoBtnText}>
           {photo ? "Fotoğraf Seçildi" : "Fotoğraf Seç"}
         </Text>
@@ -83,7 +90,7 @@ const Home = () => {
         placeholder="Yaş"
         keyboardType="number-pad"
         style={styles.input}
-
+ placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, age: text })}
       />
       <TextInput
@@ -92,6 +99,7 @@ const Home = () => {
         style={styles.input}
           keyboardType="email-address"
   autoCapitalize="none"
+   placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, email: text })}
       />
       <TextInput
@@ -99,7 +107,7 @@ const Home = () => {
         placeholder="Boy (cm)"
         style={styles.input}
         keyboardType="number-pad"
-
+ placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, height: text })}
       />
       <TextInput
@@ -107,14 +115,15 @@ const Home = () => {
         placeholder="Kilo (kg)"
         style={styles.input}
                 keyboardType="number-pad"
- 
+  placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, weight: text })}
       />
       <TextInput
         value={formData.name}
-        placeholder="İsim"
+    
         style={styles.input}
-
+            placeholder="İsim"
+ placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, name: text })}
       />
 
@@ -125,6 +134,7 @@ const Home = () => {
     </ScrollView>
   </View>
 </SafeAreaView>
+</LinearGradient>
 
   );
 };
@@ -133,8 +143,8 @@ const styles = StyleSheet.create({
   headerText: {
     paddingVertical: 30,
     textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
+    color:"white",
+    fontSize: 20
   },
   photo: {
     margin: 10,
@@ -142,39 +152,43 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   noPhotoText: {
-    color: "gray",
+    color: "white",
     textAlign: "center",
     padding: 5,
   },
   photoBtn: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "rgb(222, 222, 222)",
     padding: 10,
     margin: 10,
+    alignSelf: "center",
     borderRadius: 8,
   },
   photoBtnText: {
-    color: "gray",
+
+    color: "black",
     textAlign: "center",
   },
   closeButton: {
-    backgroundColor: "black",
+    backgroundColor: "rgb(201, 235, 100)",
+    borderRadius: 15,
+    padding:15,
     marginTop: 20,
     paddingVertical: 12,
-    borderRadius: 10,
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
-    fontWeight: "bold",
+    color: "black",
+
     fontSize: 16,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ddd",
+    backgroundColor: "rgb(49,49,49)",
     padding: 10,
+
     marginVertical: 8,
     borderRadius: 8,
-  },
+  }
 });
 
 export default Home;

@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import { SafeAreaView, Text, ScrollView, Dimensions } from "react-native";
+import { SafeAreaView, Text, ScrollView, Dimensions,View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-
+import { LinearGradient } from "expo-linear-gradient";
 const Activity = () => {
   const [screen, setScreen] = useState(Dimensions.get("window"));
 
@@ -35,7 +35,12 @@ const Activity = () => {
   const chartWidth = Math.max(screen.width - 20, data.labels.length * 70);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+       <LinearGradient
+       colors={['rgb(41,47,25)', 'black']}
+       style={{ flex: 1 }}
+     
+      >
+            <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
       <ScrollView
         contentContainerStyle={{
           paddingTop: topPadding,
@@ -43,11 +48,13 @@ const Activity = () => {
           paddingHorizontal: 10,
         }}
       >
-        <Text  style={{ fontSize: 24, fontWeight: "bold", marginBottom: 15 }}>
-          Günlük Aktivite
-        </Text>
 
-        <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>Adım Sayısı</Text>
+       <View style={{ flexDirection: "column"}}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" ,color:"rgb(201, 235, 100)",padding:5}}>Günlük Aktivite</Text>
+
+          <Text style={{ fontSize: 15, fontWeight: "bold" ,color:"white",padding:5}}>Adım Sayısı</Text>
+        </View>      
+       
 
         <ScrollView horizontal showsHorizontalScrollIndicator={true}>
           <BarChart
@@ -63,6 +70,7 @@ const Activity = () => {
         </ScrollView>
       </ScrollView>
     </SafeAreaView>
+</LinearGradient>
   );
 };
 
