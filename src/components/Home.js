@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
+import { LinearGradient } from "expo-linear-gradient";
 import {
   SafeAreaView,
   Text,
@@ -31,48 +32,60 @@ const Home = () => {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+
+       <LinearGradient
+       colors={['rgb(41,47,25)', 'black']}
+       style={{ flex: 1 }}
+     
+      >
+            <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
+
+     
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingTop: topPadding, paddingHorizontal: 20, paddingBottom: 40 }}
         showsVerticalScrollIndicator={true}
       >
 
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin:10}}>
-          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Merhaba, Zeynep!</Text>
-         
-        </View>
+        <View style={{ flexDirection: "column"}}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" ,color:"rgb(201, 235, 100)",padding:5}}>Merhaba, Zeynep!</Text>
+
+          <Text style={{ fontSize: 15, fontWeight: "bold" ,color:"white",padding:5}}>Hoşgeldin Fitness!</Text>
+        </View>      
 
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={true} style={{ marginBottom: 20 }}>
 
-          <View style={{ width: 150, backgroundColor: "white", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text>Adım</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold" }}>8,500</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={true} style={{ marginVertical:10 }}>
+
+          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
+            <Text style={{color:"white"}}>Adım</Text>
+            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>8,500</Text>
           </View>
-          <View style={{ width: 150, backgroundColor: "white", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text>Kalori</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold" }}>320 kcal</Text>
+          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
+            <Text style={{color:"white"}}>Kalori</Text>
+            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>320 kcal</Text>
           </View>
-          <View style={{ width: 150, backgroundColor: "white", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text>Mesafe</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold" }}>5 km</Text>
+          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
+            <Text style={{color:"white"}}>Mesafe</Text>
+            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>5 km</Text>
           </View>
 
 
         </ScrollView>
 
         <View style={{padding:10}}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Son Aktiviteler</Text>
+        <Text style={{ fontSize: 18, color:"white", marginBottom: 10 }}>Son Aktiviteler</Text>
         {activities.map((item) => (
-          <View key={item.id} style={{ flexDirection: "row", justifyContent: "space-between", backgroundColor: "white", padding: 15, borderRadius: 10, marginBottom: 10, elevation: 2 }}>
-            <Text>{item.name}</Text>
-            <Text>{item.value}</Text>
+          <View key={item.id} style={{ flexDirection: "row", justifyContent: "space-between", backgroundColor: "rgb(49,49,49)", padding: 15, borderRadius: 10, marginBottom: 10, elevation: 2 }}>
+            <Text style={{color:"white"}}>{item.name}</Text>
+            <Text style={{color:"white"}}>{item.value}</Text>
           </View>
         ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+      </LinearGradient>
+
   );
 };
 

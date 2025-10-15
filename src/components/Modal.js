@@ -45,6 +45,7 @@ const AppModal = ({ open, setOpen }) => {
             value={formData.adim}
             placeholder="Adım"
             keyboardType="numeric"
+             placeholderTextColor="white"
             style={styles.input}
             onChangeText={(text) => setFormData({ ...formData, adim: text })}
           />
@@ -52,6 +53,8 @@ const AppModal = ({ open, setOpen }) => {
           <TextInput
             value={formData.kalori}
             placeholder="Kalori"
+         
+ placeholderTextColor="white"
             keyboardType="numeric"
             style={styles.input}
             onChangeText={(text) =>
@@ -60,16 +63,18 @@ const AppModal = ({ open, setOpen }) => {
           />
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-              <Text style={styles.buttonText}>Güncelle</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => setOpen(false)}
+          <TouchableOpacity
+          onPress={handleSave} 
+      
               style={styles.closeButton}
             >
+              <Text style={styles.buttonText}>Güncelle</Text>
+            </TouchableOpacity>
+            <TouchableOpacity   onPress={() => setOpen(false)} style={styles.saveButton}>
               <Text style={styles.buttonText}>Kapat</Text>
             </TouchableOpacity>
+
+   
           </View>
         </View>
       </View>
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContainer: {
-    backgroundColor: "white",
+    backgroundColor: "rgb(49,49,49)",
     borderRadius: 20,
     padding: 20,
     alignItems: "center",
@@ -99,7 +104,8 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 22,
-    fontWeight: "bold",
+
+    color:"white",
     marginBottom: 20,
   },
   input: {
@@ -118,24 +124,25 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   saveButton: {
-    backgroundColor: "gray",
-    flex: 1,
-    marginRight: 5,
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  closeButton: {
-    backgroundColor: "black",
+  backgroundColor: "rgb(222, 222, 222)",
     flex: 1,
     marginLeft: 5,
     paddingVertical: 12,
-    borderRadius: 10,
+    borderRadius: 15,
+    padding:10,
+    alignItems: "center",
+  },
+  closeButton: {
+    backgroundColor: "rgb(201, 235, 100)",
+    flex: 1,
+    marginLeft: 5,
+    paddingVertical: 12,
+    borderRadius: 15,
+    padding:10,
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
-    fontWeight: "bold",
+    color: "black",
     fontSize: 16,
   },
 });
