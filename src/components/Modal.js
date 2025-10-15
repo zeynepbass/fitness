@@ -1,4 +1,5 @@
 
+
 import { useState } from 'react';
 import {
   StyleSheet,
@@ -8,6 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 
 const AppModal = ({ open, setOpen }) => {
@@ -17,7 +19,13 @@ const AppModal = ({ open, setOpen }) => {
     kalori: "",
   });
 
-  const handleSave = () => {
+  const handleSave = (formData) => {
+    for (let key in formData){
+      if(!formData[key]){
+        Alert.alert("Hata", "Lütfen tüm alanları doldurun!");
+        return;
+      }
+    }
     console.log(formData);
     setOpen(false);
   };
