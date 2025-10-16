@@ -21,10 +21,9 @@ const Home = () => {
   const [photo, setPhoto] = useState(null);
   const [formData, setFormData] = useState({
     age: "",
-    email: "",
+
     height: "",
     weight: "",
-    name: "",
     image: "",
   });
 
@@ -93,6 +92,7 @@ const Home = () => {
  placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, age: text })}
       />
+<<<<<<< HEAD
       <TextInput
         value={formData.email}
         placeholder="Email"
@@ -102,6 +102,9 @@ const Home = () => {
    placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, email: text })}
       />
+=======
+
+>>>>>>> main
       <TextInput
         value={formData.height}
         placeholder="Boy (cm)"
@@ -118,6 +121,7 @@ const Home = () => {
   placeholderTextColor="white"
         onChangeText={(text) => setFormData({ ...formData, weight: text })}
       />
+<<<<<<< HEAD
       <TextInput
         value={formData.name}
     
@@ -127,6 +131,9 @@ const Home = () => {
         onChangeText={(text) => setFormData({ ...formData, name: text })}
       />
 
+=======
+ 
+>>>>>>> main
 
       <TouchableOpacity style={styles.closeButton} onPress={() => updated(formData)}>
         <Text style={styles.buttonText}>Güncelle</Text>

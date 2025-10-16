@@ -10,10 +10,17 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+<<<<<<< HEAD
+=======
+import AntDesign from '@expo/vector-icons/AntDesign';
+>>>>>>> main
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal"
+import {auth} from "../../firebase"
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = () => {
-
+const navigation=useNavigation();
   const [screen, setScreen] = useState(Dimensions.get("window"));
 const [open,setOpen]=useState(false)
   useEffect(() => {
@@ -26,7 +33,15 @@ const [open,setOpen]=useState(false)
   const topPadding = screen.height * 0.1;
   const cardWidth = (screen.width - 80) / 2;
   const imageSize = Math.min(screen.width, screen.height) * 0.25;
-
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      await AsyncStorage.removeItem("userToken");
+      navigation.replace("Login");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
            <LinearGradient
            colors={['rgb(41,47,25)', 'black']}
@@ -126,9 +141,36 @@ const [open,setOpen]=useState(false)
           </Text>
         </TouchableOpacity>
    <Modal   open={open} setOpen={setOpen}/>
-
+  
       </ScrollView>
+ 
     </SafeAreaView>
+<<<<<<< HEAD
+=======
+    <TouchableOpacity
+  style={{
+    backgroundColor: "rgb(201, 235, 100)",
+    width: 60,            
+    height: 60,  
+    marginBottom: topPadding,
+    alignSelf: "center",
+    borderRadius: 30,       
+    flexDirection: "row",      
+    justifyContent: "center",   
+    alignItems: "center",      
+    shadowColor: "rgb(155, 181, 76)",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  }}
+  onPress={handleLogout}        
+>
+  <AntDesign name="logout" size={24} color="black" />
+</TouchableOpacity>
+
+
+>>>>>>> main
 </LinearGradient>
   );
 };
