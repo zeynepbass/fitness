@@ -66,7 +66,7 @@ const Register = () => {
       });
 
       Alert.alert("Başarılı", "Kayıt tamamlandı!");
-      navigation.replace("HomeMain");
+
     } catch (error) {
       console.log(error.message);
       Alert.alert("Hata", error.message);

@@ -1,69 +1,33 @@
 
+import React, { useState, useEffect } from "react";
 
-<<<<<<< HEAD
-import React from "react";
-=======
-import { useState, useEffect } from 'react';
->>>>>>> main
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity, Text,View,ActivityIndicator } from "react-native";
+import { TouchableOpacity, Text, View, ActivityIndicator } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import Feather from "@expo/vector-icons/Feather";
-import DetailsScreen from "../screens/DetailsScreen";
+
+
 import HomeScreen from "../screens/HomeScreen";
+import DetailsScreen from "../screens/DetailsScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-<<<<<<< HEAD
-import { TouchableOpacity ,Text} from "react-native";
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-
-const HomeStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="HomeMain"
-      component={HomeScreen}
-      options={{ headerShown: false, title: "" }}
-    />
-    <Stack.Screen
-      name="DetailsScreen"
-      component={DetailsScreen}
-      options={{
-        headerShown: true,
-        title: " ",
-        headerShown: true,
-        headerTransparent: true
-      }}
-    />
-  </Stack.Navigator>
-);
-=======
-import RegisterScreen from '../screens/RegisterScreen';
+import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
->>>>>>> main
 
 const BottomTab = () => (
   <Tab.Navigator
     screenOptions={({ navigation }) => ({
-      title:"",
+      title: "",
       headerTitle: () => (
-<<<<<<< HEAD
         <TouchableOpacity onPress={() => navigation.navigate("HomeMain")}>
- 
-            <Text style={{color:"white",fontWeight:"bold",fontSize:"20"}}>FitnessApp</Text>
-     
-
-=======
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
             FitnessApp
           </Text>
->>>>>>> main
         </TouchableOpacity>
       ),
       headerRight: () => (
@@ -80,10 +44,6 @@ const BottomTab = () => (
         alignItems: "center",
       },
       headerTransparent: true,
-<<<<<<< HEAD
-      title: "",
-=======
->>>>>>> main
       tabBarActiveTintColor: "rgb(201, 235, 100)",
       tabBarStyle: {
         backgroundColor: "rgb(35, 37, 36)",
@@ -125,11 +85,9 @@ const BottomTab = () => (
   </Tab.Navigator>
 );
 
-
 const MainNavigator = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -137,7 +95,7 @@ const MainNavigator = () => {
       setLoading(false);
     });
 
-    return unsubscribe; 
+    return unsubscribe;
   }, []);
 
   if (loading) {
@@ -150,7 +108,7 @@ const MainNavigator = () => {
 
   return (
     <Stack.Navigator>
-{!user ? (
+      {!user ? (
         <>
           <Stack.Screen
             name="Login"
@@ -160,17 +118,14 @@ const MainNavigator = () => {
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
-            options={{
-    
-              headerShown: false
-            }}
+            options={{ headerShown: false }}
           />
         </>
       ) : (
         <Stack.Screen
-          name="HomeMain"
+          name="HomeTabs"
           component={BottomTab}
-          options={{ headerShown: false,title:"" }}
+          options={{ headerShown: false, title: "" }}
         />
       )}
 
@@ -181,11 +136,8 @@ const MainNavigator = () => {
           title: "",
           headerTransparent: true,
           headerBackTitleVisible: false,
-
         }}
       />
-
-
     </Stack.Navigator>
   );
 };

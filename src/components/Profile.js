@@ -10,10 +10,9 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-<<<<<<< HEAD
-=======
+
 import AntDesign from '@expo/vector-icons/AntDesign';
->>>>>>> main
+
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal"
 import {auth} from "../../firebase"
@@ -145,8 +144,6 @@ const [open,setOpen]=useState(false)
       </ScrollView>
  
     </SafeAreaView>
-<<<<<<< HEAD
-=======
     <TouchableOpacity
   style={{
     backgroundColor: "rgb(201, 235, 100)",
@@ -170,7 +167,7 @@ const [open,setOpen]=useState(false)
 </TouchableOpacity>
 
 
->>>>>>> main
+
 </LinearGradient>
   );
 };
