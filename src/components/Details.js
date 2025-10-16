@@ -122,14 +122,6 @@ const Home = () => {
         onChangeText={(text) => setFormData({ ...formData, weight: text })}
       />
 
-      <TextInput
-        value={formData.name}
-    
-        style={styles.input}
-            placeholder="İsim"
- placeholderTextColor="white"
-        onChangeText={(text) => setFormData({ ...formData, name: text })}
-      />
 
 
 

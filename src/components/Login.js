@@ -25,7 +25,7 @@ const LoginScreen = () => {
       const user = userCredential.user;
 
 
-      await AsyncStorage.setItem("userToken", user.uid);
+      await AsyncStorage.setItem("userToken", JSON.stringify(user));
       navigation.navigate("HomeMain")
 
       console.log("✅ Giriş başarılı:", user.email);
