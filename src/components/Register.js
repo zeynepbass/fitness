@@ -33,6 +33,7 @@ const Register = () => {
 
 
   const handleRegister = async () => {
+    await AsyncStorage.clear();
     const { email, confirmEmail, password, confirmPassword, ad, soyad } = formData;
 
     if (!email || !confirmEmail || !password || !confirmPassword || !ad || !soyad) {
