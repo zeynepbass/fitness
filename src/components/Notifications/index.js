@@ -1,9 +1,11 @@
 
-import { View, Text, FlatList, SafeAreaView, Dimensions } from "react-native";
+
+import { View, Text, SafeAreaView, Dimensions } from "react-native";
 
 import { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
-import { saveNotification, getNotifications } from "../../components/Notifications/notificationStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { saveNotification } from "./notificationStorage";
 import { LinearGradient } from "expo-linear-gradient";
 
 const motivationalMessages = [
@@ -14,7 +16,6 @@ const motivationalMessages = [
   "Her adım seni hedeflerine yaklaştırıyor!"
 ];
 
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -24,90 +25,75 @@ Notifications.setNotificationHandler({
 });
 
 export default function NotificationsScreen() {
-  const [notifications, setNotifications] = useState([]);
+  const [todayNotification, setTodayNotification] = useState(null);
   const [screen, setScreen] = useState(Dimensions.get("window"));
 
-
   useEffect(() => {
-    const scheduleNotification = async () => {
+    const scheduleDailyNotification = async () => {
+      const todayNotifFlag = await AsyncStorage.getItem("todayNotification");
+      if (todayNotifFlag) return;
+  
       const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
       const message = motivationalMessages[randomIndex];
-
-      const notif = {
-        title: "Motivasyon Zamanı!",
-        body: message,
-        time: new Date().toISOString(),
-      };
-
-
+  
+      const notif = { title: "Motivasyon Zamanı!", body: message, time: new Date().toISOString() };
+  
       await Notifications.scheduleNotificationAsync({
-        content: {
-          title: notif.title,
-          body: notif.body,
-        },
-        trigger: {  hour: 9,
-          minute: 0,
-          repeats: true },
+        content: { title: "Motivasyon Zamanı!", body: message },
+        trigger: { hour: 17, minute: 37, repeats: false }, 
       });
-
-
+      
+  
       await saveNotification(notif);
-      console.log("✅ Bildirim planlandı ve kaydedildi.");
+      await AsyncStorage.setItem("todayNotification", JSON.stringify(notif));
+      setTodayNotification(notif);
+      console.log("✅ Bugünkü bildirim planlandı.");
     };
-
-    scheduleNotification();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const data = await getNotifications();
-      setNotifications(data.reverse());
+  
+    const register = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status === "granted") {
+        scheduleDailyNotification();
+      } else {
+        alert("Bildirim izni gerekli!");
+      }
     };
-
-    fetchNotifications();
-
-    const subscription = Dimensions.addEventListener("change", ({ window }) => {
-      setScreen(window);
-    });
-
-    return () => subscription?.remove();
+  
+    register();
   }, []);
+  
 
-  const topPadding = screen.height * 0.1;
+
+
 
   return (
     <LinearGradient colors={["rgb(41,47,25)", "black"]} style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, padding: 20 }}>
-        <View style={{ flex: 1, paddingVertical: 20, justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ color: "white", fontSize: 24, marginBottom: 20 }}>Bildirimler</Text>
-          <FlatList
-            data={notifications}
-            keyExtractor={(item, index) => index.toString()}
-            contentContainerStyle={{
-              paddingTop: topPadding,
-              paddingBottom: topPadding,
-            }}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  backgroundColor: "rgb(49,49,49)",
-                  padding: 15,
-                  borderRadius: 10,
-                  marginBottom: 10,
-                  elevation: 2,
-                }}
-              >
-                <Text style={{ fontWeight: "bold", color: "white", marginBottom: 5 }}>
-                  {item.title}
-                </Text>
-                <Text style={{ color: "white", marginBottom: 5 }}>{item.body}</Text>
-                <Text style={{ fontSize: 12, color: "gray" }}>
-                  {new Date(item.time).toLocaleString()}
-                </Text>
-              </View>
-            )}
-          />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", width: screen.width }}>
+          <Text style={{ color: "white", fontSize: 24, marginBottom: 20 }}>Bugünün Bildirimi</Text>
+
+          {todayNotification && (
+            <View
+              style={{
+                backgroundColor: "rgb(49,49,49)",
+                padding: 15,
+                borderRadius: 10,
+                marginBottom: 10,
+                elevation: 2,
+                width: "90%"
+              }}
+            >
+              <Text style={{ fontWeight: "bold", color: "white", marginBottom: 5 }}>
+                {todayNotification.title}
+              </Text>
+              <Text style={{ color: "white", marginBottom: 5 }}>
+                {todayNotification.body}
+              </Text>
+              <Text style={{ fontSize: 12, color: "gray" }}>
+                {new Date(todayNotification.time).toLocaleString()}
+              </Text>
+            </View>
+          )}
         </View>
       </SafeAreaView>
     </LinearGradient>

@@ -10,6 +10,13 @@ export const saveNotification = async (notification) => {
     console.log("Bildirim kaydetme hatası:", error);
   }
 };
+export const clearNotifications = async () => {
+  try {
+    await AsyncStorage.removeItem("notifications");
+  } catch (error) {
+    console.log("Bildirimleri temizleme hatası:", error);
+  }
+};
 
 export const getNotifications = async () => {
   try {

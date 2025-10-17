@@ -21,15 +21,25 @@
     },
     "android": {
       "permissions": [
-    "ACTIVITY_RECOGNITION"
-  ],
+        "ACTIVITY_RECOGNITION",
+        "NOTIFICATIONS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      
       "edgeToEdgeEnabled": true
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": ["default"]
+        }
+      ]
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }
