@@ -43,7 +43,7 @@ const ProfileScreen = () => {
     };
 
     checkTokenAndListen();
-  }, [data]);
+  }, []);
 
   const topPadding = screen.height * 0.1;
   const cardWidth = (screen.width - 80) / 2;

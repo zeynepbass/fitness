@@ -129,7 +129,7 @@ return(
     <Stack.Screen
       name="HomeMain"
       component={BottomTab}
-      options={{ headerShown: false }}
+      options={{ headerShown: false,title:"" }}
     />
     <Stack.Screen
       name="Login"
