@@ -1,3 +1,4 @@
+import { View, Text, Dimensions } from 'react-native';
 
 
 import { View, Text, SafeAreaView, Dimensions } from "react-native";
