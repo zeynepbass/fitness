@@ -1,9 +1,13 @@
-import { useEffect,useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity, Text, View, ActivityIndicator } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Feather from "@expo/vector-icons/Feather";
 import HomeScreen from "../screens/HomeScreen";
+import NotificationsScreen from '../screens/NotificationsScreen';
 import DetailsScreen from "../screens/DetailsScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -25,12 +29,21 @@ const BottomTab = () => (
         </TouchableOpacity>
       ),
       headerRight: () => (
+        <>
+                 <TouchableOpacity
+               onPress={() => navigation.navigate("Notifications")}
+               style={{ paddingRight: 10 }}
+             >
+<EvilIcons name="bell" size={24} color="rgb(145, 185, 24)" />
+             </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("DetailsScreen")}
           style={{ paddingRight: 10 }}
         >
           <Feather name="settings" size={24} color="rgb(145, 185, 24)" />
         </TouchableOpacity>
+
+             </>
       ),
       headerTitleAlign: "center",
       tabBarItemStyle: {
@@ -81,7 +94,7 @@ const BottomTab = () => (
 
 const MainNavigator = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -97,13 +110,7 @@ const MainNavigator = () => {
   }, []);
 
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="green" />
-      </View>
-    );
-  }
+
 
   return (
     <Stack.Navigator>
@@ -137,6 +144,16 @@ const MainNavigator = () => {
           headerBackTitleVisible: false,
         }}
       />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          title: "",
+          headerTransparent: true,
+          headerBackTitleVisible: false,
+        }}
+      />
+
     </Stack.Navigator>
   );
 };

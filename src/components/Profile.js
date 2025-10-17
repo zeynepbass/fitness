@@ -94,7 +94,7 @@ const ProfileScreen = () => {
               textAlign: "center",
             }}
           >
-            Fitness Hedefi: {data ? `${data.steps} Adım` : "Adım Girilmedi"} 
+            Fitness Hedefi: {data ? `${data.Adim} Adım` : "Adım Girilmedi"} 
           </Text>
 
           <View
@@ -119,7 +119,7 @@ const ProfileScreen = () => {
               }}
             >
               <Text style={{ color: "white" }}>Adım Hedefi</Text>
-              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.steps}</Text>
+              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.Adim}</Text>
             </View>
 
             <View
@@ -153,8 +153,8 @@ const ProfileScreen = () => {
           >
             <Text style={{ color: "black" }}>Hedefleri Düzenle</Text>
           </TouchableOpacity>
-          <Modal open={open} setOpen={setOpen}  onUpdate={(newSteps, newCalories) => {
-    setData(prev => ({ ...prev, steps: newSteps, calories: newCalories }));
+          <Modal open={open} setOpen={setOpen}  onUpdate={(newAdim, newCalories) => {
+    setData(prev => ({ ...prev, Adim: newAdim, calories: newCalories }));
   }}/>
         </ScrollView>
       </SafeAreaView>

@@ -1,7 +1,5 @@
 
-
 import { useState, useEffect } from 'react';
-
 import Steps from "../components/Steps"
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -57,21 +55,7 @@ const Home = () => {
 
 
         <ScrollView horizontal showsHorizontalScrollIndicator={true} style={{ marginVertical:10 }}>
-
-          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text style={{color:"white"}}>Adım</Text>
         <Steps/>
-          </View>
-          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text style={{color:"white"}}>Kalori</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>320 kcal</Text>
-          </View>
-          <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
-            <Text style={{color:"white"}}>Mesafe</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>5 km</Text>
-          </View>
-
-
         </ScrollView>
 
         <View style={{padding:10}}>

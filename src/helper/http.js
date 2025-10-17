@@ -96,3 +96,37 @@ export const addStepAndCalories = async (steps, calories, distance) => {
     console.log("addStepAndCalories Hatası:", error);
   }
 };
+export const addDailyNotification = async (email, notification) => {
+  try {
+    const usersCol = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCol);
+
+    let userDocId = null;
+
+    usersSnapshot.forEach(docSnap => {
+      if (docSnap.data().email === email) {
+        userDocId = docSnap.id;
+      }
+    });
+
+    if (!userDocId) {
+      // Eğer kullanıcı yoksa oluştur
+      userDocId = email;
+      await setDoc(doc(db, "users", userDocId), { email, notifications: [] });
+    }
+
+    const userRef = doc(db, "users", userDocId);
+
+    await setDoc(
+      userRef,
+      {
+        notifications: [...(usersSnapshot.data()?.notifications || []), notification],
+      },
+      { merge: true }
+    );
+
+    console.log("Firebase'e günlük motivasyon bildirimi kaydedildi!");
+  } catch (error) {
+    console.log("Firebase notification hatası:", error);
+  }
+};
