@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, Text } from "react-native";
-import EvilIcons from '@expo/vector-icons/EvilIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Feather from "@expo/vector-icons/Feather";
 import HomeScreen from "../screens/HomeScreen";
@@ -34,7 +34,8 @@ const BottomTab = () => (
                onPress={() => navigation.navigate("Notifications")}
                style={{ paddingRight: 10 }}
              >
-<EvilIcons name="bell" size={24} color="rgb(145, 185, 24)" />
+<MaterialIcons name="sports-gymnastics" size={24} color="rgb(145, 185, 24)"  />
+
              </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("DetailsScreen")}
