@@ -1,38 +1,18 @@
+import { View, Text, SafeAreaView, ImageBackground, ScrollView, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { useState } from 'react';
 
-import { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-  ImageBackground,
-} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Home = () => {
+const LoginScreen = () => {
+
   const navigation = useNavigation();
-  const [formData, setFormData] = useState({ password: "", email: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      const token = await AsyncStorage.getItem("userToken");
-      if (token) {
-        navigation.replace("HomeMain");
-      }
-    };
-    checkLogin();
-  }, []);
-
-  const login = async (formData) => {
+  const login = async () => {
     const { email, password } = formData;
 
     if (!email || !password) {
@@ -45,13 +25,14 @@ const Home = () => {
       const user = userCredential.user;
 
 
-      await AsyncStorage.setItem("userToken", user.uid);
+      await AsyncStorage.setItem("userToken", JSON.stringify(user));
+      navigation.navigate("HomeMain")
 
-      console.log("Login başarılı:", user.email);
-      navigation.replace("HomeMain");
+      console.log("✅ Giriş başarılı:", user.email);
+    
     } catch (error) {
-      console.log(error.message);
-      Alert.alert("Hata", error.message);
+      console.log("❌ Login hatası:", error.message);
+      Alert.alert("Hata", "Giriş başarısız, bilgileri kontrol et.");
     }
   };
 
@@ -68,7 +49,6 @@ const Home = () => {
           <View style={styles.formContainer}>
             <ScrollView
               contentContainerStyle={{ paddingVertical: 20 }}
-              showsVerticalScrollIndicator={true}
               keyboardShouldPersistTaps="handled"
             >
               <Text style={styles.headerText}>Giriş Yap</Text>
@@ -90,16 +70,24 @@ const Home = () => {
                 placeholder="Parola"
                 style={styles.input}
                 placeholderTextColor="white"
-                secureTextEntry={true}
+                secureTextEntry
                 onChangeText={(text) =>
                   setFormData({ ...formData, password: text })
                 }
               />
-<Text style={{color:"rgb(201, 235, 100)", textDecorationLine:"underline",textAlign:"right"}} onPress={()=>navigation.navigate("Register")}>Kayıt Ol</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => login(formData)}
+
+              <Text
+                style={{
+                  color: "rgb(201, 235, 100)",
+                  textDecorationLine: "underline",
+                  textAlign: "right",
+                }}
+                onPress={() => navigation.navigate("Register")}
               >
+                Kayıt Ol
+              </Text>
+
+              <TouchableOpacity style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Giriş yap</Text>
               </TouchableOpacity>
             </ScrollView>
@@ -150,4 +138,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default LoginScreen;

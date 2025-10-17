@@ -1,40 +1,50 @@
 
-
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity, Text,View,ActivityIndicator } from "react-native";
-import { auth } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { TouchableOpacity, Text } from "react-native";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Feather from "@expo/vector-icons/Feather";
-import DetailsScreen from "../screens/DetailsScreen";
 import HomeScreen from "../screens/HomeScreen";
+import NotificationsScreen from '../screens/NotificationsScreen';
+import DetailsScreen from "../screens/DetailsScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import RegisterScreen from '../screens/RegisterScreen';
+import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 const BottomTab = () => (
   <Tab.Navigator
     screenOptions={({ navigation }) => ({
-      title:"",
+      title: "",
       headerTitle: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HomeMain")}>
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
             FitnessApp
           </Text>
         </TouchableOpacity>
       ),
       headerRight: () => (
+        <>
+                 <TouchableOpacity
+               onPress={() => navigation.navigate("Notifications")}
+               style={{ paddingRight: 10 }}
+             >
+<MaterialIcons name="sports-gymnastics" size={24} color="rgb(145, 185, 24)"  />
+
+             </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("DetailsScreen")}
           style={{ paddingRight: 10 }}
         >
           <Feather name="settings" size={24} color="rgb(145, 185, 24)" />
         </TouchableOpacity>
+
+             </>
       ),
       headerTitleAlign: "center",
       tabBarItemStyle: {
@@ -83,55 +93,49 @@ const BottomTab = () => (
   </Tab.Navigator>
 );
 
-
 const MainNavigator = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return unsubscribe; 
+    const fetchUserData = async () => {
+      try {
+        const stored = await AsyncStorage.getItem("userToken");
+        if (stored) {
+          setUser(JSON.parse(stored));
+        }
+      } catch (error) {
+        console.log("LocalStorage hatası:", error);
+      }
+    };
+    fetchUserData();
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="green" />
-      </View>
-    );
-  }
+
+
 
   return (
     <Stack.Navigator>
-{!user ? (
+      {!user ? (
         <>
           <Stack.Screen
             name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{
-    
-              headerShown: false
-            }}
-          />
+   
         </>
       ) : (
         <Stack.Screen
-          name="HomeMain"
+          name="HomeTabs"
           component={BottomTab}
-          options={{ headerShown: false,title:"" }}
+          options={{ headerShown: false, title: "" }}
         />
       )}
-
+       <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ headerShown: false }}
+          />
       <Stack.Screen
         name="DetailsScreen"
         component={DetailsScreen}
@@ -139,10 +143,17 @@ const MainNavigator = () => {
           title: "",
           headerTransparent: true,
           headerBackTitleVisible: false,
-
         }}
       />
-
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          title: "",
+          headerTransparent: true,
+          headerBackTitleVisible: false,
+        }}
+      />
 
     </Stack.Navigator>
   );
