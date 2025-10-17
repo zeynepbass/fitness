@@ -1,8 +1,5 @@
-import { View, Text, Dimensions } from 'react-native';
-
 
 import { View, Text, SafeAreaView, Dimensions } from "react-native";
-
 import { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";

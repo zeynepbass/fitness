@@ -9,17 +9,30 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Home = () => {
   const [screen, setScreen] = useState(Dimensions.get("window"));
+  const [userToken, setUserToken] = useState("");
 
   useEffect(() => {
-    const subscription = Dimensions.addEventListener("change", ({ window }) => {
-      setScreen(window);
-    });
-    return () => subscription?.remove();
-  }, []);
+    const checkTokenAndListen = async () => {
+      const token = await AsyncStorage.getItem("userToken");
 
+      const parsedToken = token ? JSON.parse(token) : null;
+      setUserToken(parsedToken);
+
+      const subscription = Dimensions.addEventListener(
+        "change",
+        ({ window }) => {
+          setScreen(window);
+        }
+      );
+ 
+      return () => subscription?.remove();
+    };
+
+    checkTokenAndListen();
+  }, []);
   const topPadding = screen.height * 0.1;
 
   const activities = [
@@ -47,15 +60,15 @@ const Home = () => {
       >
 
         <View style={{ flexDirection: "column"}}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" ,color:"rgb(201, 235, 100)",padding:5}}>Merhaba, Zeynep!</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" ,color:"rgb(201, 235, 100)",padding:5}}>Merhaba, {userToken?.displayName || "Kullanıcı"}</Text>
 
-          <Text style={{ fontSize: 15, fontWeight: "bold" ,color:"white",padding:5}}>Hoşgeldin Fitness!</Text>
+          <Text style={{ fontSize: 15, fontWeight: "bold" ,color:"white",padding:5}}>Fitness'a Hoşgeldin !</Text>
         </View>      
 
 
 
         <ScrollView horizontal showsHorizontalScrollIndicator={true} style={{ marginVertical:10 }}>
-        <Steps/>
+        <Steps userEmail={userToken?.email}/>
         </ScrollView>
 
         <View style={{padding:10}}>

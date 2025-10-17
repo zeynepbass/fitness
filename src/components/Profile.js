@@ -21,7 +21,7 @@ const ProfileScreen = () => {
   const [screen, setScreen] = useState(Dimensions.get("window"));
   const [open, setOpen] = useState(false);
   const [userToken, setUserToken] = useState(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(0);
   useEffect(() => {
     const checkTokenAndListen = async () => {
       const token = await AsyncStorage.getItem("userToken");
@@ -43,7 +43,7 @@ const ProfileScreen = () => {
     };
 
     checkTokenAndListen();
-  }, []);
+  }, [data]);
 
   const topPadding = screen.height * 0.1;
   const cardWidth = (screen.width - 80) / 2;
@@ -52,7 +52,7 @@ const ProfileScreen = () => {
     try {
       await auth.signOut();
       await AsyncStorage.removeItem("userToken");
-      navigation.replace("Login");
+      navigation.navigate("Login");
     } catch (error) {
       alert(error.message);
     }
@@ -85,17 +85,10 @@ const ProfileScreen = () => {
           <Text style={{ fontSize: 24, color: "white" }}>
             {userToken?.displayName || "Kullanıcı"}
           </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "bold",
-              color: "white",
-              margin: 10,
-              textAlign: "center",
-            }}
-          >
-            Fitness Hedefi: {data ? `${data.Adim} Adım` : "Adım Girilmedi"} 
-          </Text>
+          <Text style={{ fontSize: 14, fontWeight: "bold", color: "white", margin: 10, textAlign: "center" }}>
+  Fitness Hedefi: {data?.calories ? `${data.calories}` : "Adım Girilmedi"}
+</Text>
+
 
           <View
             style={{
@@ -119,7 +112,7 @@ const ProfileScreen = () => {
               }}
             >
               <Text style={{ color: "white" }}>Adım Hedefi</Text>
-              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.Adim}</Text>
+              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.steps}</Text>
             </View>
 
             <View
@@ -153,8 +146,8 @@ const ProfileScreen = () => {
           >
             <Text style={{ color: "black" }}>Hedefleri Düzenle</Text>
           </TouchableOpacity>
-          <Modal open={open} setOpen={setOpen}  onUpdate={(newAdim, newCalories) => {
-    setData(prev => ({ ...prev, Adim: newAdim, calories: newCalories }));
+          <Modal open={open} setOpen={setOpen}  onUpdate={(newadim, newkalori) => {
+setData(prev => ({ ...prev, steps: newadim, calories: newkalori }));
   }}/>
         </ScrollView>
       </SafeAreaView>

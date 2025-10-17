@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, ScrollView, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView,ImageBackground, ScrollView, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useState } from 'react';
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -26,10 +26,12 @@ const LoginScreen = () => {
 
 
       await AsyncStorage.setItem("userToken", JSON.stringify(user));
-      navigation.navigate("HomeMain")
-
+      
+   
       console.log("✅ Giriş başarılı:", user.email);
-    
+      navigation.navigate("HomeMain");
+
+      
     } catch (error) {
       console.log("❌ Login hatası:", error.message);
       Alert.alert("Hata", "Giriş başarısız, bilgileri kontrol et.");
@@ -75,6 +77,8 @@ const LoginScreen = () => {
                   setFormData({ ...formData, password: text })
                 }
               />
+           <TouchableOpacity  onPress={() => navigation.navigate("Register")}>
+
 
               <Text
                 style={{
@@ -82,11 +86,11 @@ const LoginScreen = () => {
                   textDecorationLine: "underline",
                   textAlign: "right",
                 }}
-                onPress={() => navigation.navigate("Register")}
+
               >
                 Kayıt Ol
               </Text>
-
+              </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Giriş yap</Text>
               </TouchableOpacity>

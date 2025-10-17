@@ -1,6 +1,8 @@
 import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+
 import { db } from "../../firebase"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const addStepAndCalorie = async (email, steps, calories) => {
   try {
     const usersRef = collection(db, "users");

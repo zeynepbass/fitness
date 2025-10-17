@@ -138,12 +138,14 @@ const Register = () => {
                 secureTextEntry
                 onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
               />
+                     <TouchableOpacity  onPress={()=>navigation.navigate("Login")}>
               <Text
                 style={{ color: "rgb(201, 235, 100)", textDecorationLine: "underline", textAlign: "left" }}
-                onPress={() => navigation.navigate("Login")}
+
               >
                 Giriş Yap
               </Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={handleRegister}>
                 <Text style={styles.buttonText}>Kayıt Ol</Text>
               </TouchableOpacity>
