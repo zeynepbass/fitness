@@ -1,14 +1,8 @@
-
-import React, { useState, useEffect } from "react";
-
+import { useEffect,useState } from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity, Text, View, ActivityIndicator } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import { auth } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-
-
 import HomeScreen from "../screens/HomeScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import ActivityScreen from "../screens/ActivityScreen";
@@ -88,15 +82,20 @@ const BottomTab = () => (
 const MainNavigator = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return unsubscribe;
+    const fetchUserData = async () => {
+      try {
+        const stored = await AsyncStorage.getItem("userToken");
+        if (stored) {
+          setUser(JSON.parse(stored));
+        }
+      } catch (error) {
+        console.log("LocalStorage hatası:", error);
+      }
+    };
+    fetchUserData();
   }, []);
+
 
   if (loading) {
     return (

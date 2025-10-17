@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -8,7 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-
+import {getUserByEmail} from "../helper/http"
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal";
@@ -20,7 +21,7 @@ const ProfileScreen = () => {
   const [screen, setScreen] = useState(Dimensions.get("window"));
   const [open, setOpen] = useState(false);
   const [userToken, setUserToken] = useState(null);
-
+  const [data, setData] = useState(null);
   useEffect(() => {
     const checkTokenAndListen = async () => {
       const token = await AsyncStorage.getItem("userToken");
@@ -33,7 +34,11 @@ const ProfileScreen = () => {
           setScreen(window);
         }
       );
-
+      const fetchUsers = async () => {
+        const users = await getUserByEmail();
+        setData(users)
+      };
+      fetchUsers();
       return () => subscription?.remove();
     };
 
@@ -89,7 +94,7 @@ const ProfileScreen = () => {
               textAlign: "center",
             }}
           >
-            Fitness Hedefi: 10,000 Adım
+            Fitness Hedefi: {data ? `${data.steps} Adım` : "Adım Girilmedi"} 
           </Text>
 
           <View
@@ -114,7 +119,7 @@ const ProfileScreen = () => {
               }}
             >
               <Text style={{ color: "white" }}>Adım Hedefi</Text>
-              <Text style={{ fontWeight: "bold", color: "white" }}>10,000</Text>
+              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.steps}</Text>
             </View>
 
             <View
@@ -131,7 +136,7 @@ const ProfileScreen = () => {
             >
               <Text style={{ color: "white" }}>Kalori Hedefi</Text>
               <Text style={{ fontWeight: "bold", color: "white" }}>
-                500 kcal
+              {data?.calories}
               </Text>
             </View>
           </View>
@@ -148,7 +153,9 @@ const ProfileScreen = () => {
           >
             <Text style={{ color: "black" }}>Hedefleri Düzenle</Text>
           </TouchableOpacity>
-          <Modal open={open} setOpen={setOpen} />
+          <Modal open={open} setOpen={setOpen}  onUpdate={(newSteps, newCalories) => {
+    setData(prev => ({ ...prev, steps: newSteps, calories: newCalories }));
+  }}/>
         </ScrollView>
       </SafeAreaView>
       <TouchableOpacity

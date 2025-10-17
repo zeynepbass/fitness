@@ -13,13 +13,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "Kullanıcının adım verilerini almak için izin gerekiyor",
+        "NSHealthUpdateUsageDescription": "Kullanıcının adım verilerini güncellemek için izin gerekiyor"
+      },
       "supportsTablet": true
     },
     "android": {
+      "permissions": [
+    "ACTIVITY_RECOGNITION"
+  ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      
       "edgeToEdgeEnabled": true
     },
     "web": {

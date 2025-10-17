@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
+import Steps from "../components/Steps"
 import { LinearGradient } from "expo-linear-gradient";
 import {
   SafeAreaView,
@@ -59,7 +60,7 @@ const Home = () => {
 
           <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
             <Text style={{color:"white"}}>Adım</Text>
-            <Text style={{ fontSize: 22, fontWeight: "bold",color:"white" }}>8,500</Text>
+        <Steps/>
           </View>
           <View style={{ width: 150, backgroundColor: "rgb(49,49,49)", borderRadius: 15, padding: 15, marginRight: 10, elevation: 3 }}>
             <Text style={{color:"white"}}>Kalori</Text>
