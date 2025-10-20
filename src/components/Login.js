@@ -105,7 +105,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   formContainer: {
     width: "90%",
-    backgroundColor: "rgb(26, 38, 19)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,

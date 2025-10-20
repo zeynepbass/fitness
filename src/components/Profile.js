@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -8,19 +9,21 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { getUserByEmail } from "../helper/http";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal";
-import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const ProfileScreen = () => {
+export default function ProfileScreen() {
   const navigation = useNavigation();
   const [screen, setScreen] = useState(Dimensions.get("window"));
   const [open, setOpen] = useState(false);
   const [userToken, setUserToken] = useState(null);
-  const [data, setData] = useState(0);
+  const [data, setData] = useState({});
+
   useEffect(() => {
     const checkTokenAndListen = async () => {
       const token = await AsyncStorage.getItem("userToken");
@@ -50,13 +53,18 @@ const ProfileScreen = () => {
   const imageSize = Math.min(screen.width, screen.height) * 0.25;
   const handleLogout = async () => {
     try {
-      await auth.signOut();
-      await AsyncStorage.removeItem("userToken");
       navigation.navigate("Login");
+      await AsyncStorage.removeItem("userToken");
+
     } catch (error) {
       alert(error.message);
     }
   };
+  const stats = [
+    { label: "Yaş", value: data?.age, icon: <MaterialIcons name="emoji-people" size={24} color="white" /> },
+    { label: "Kilo", value: data?.weight, icon: <FontAwesome5 name="weight" size={24} color="white" /> },
+    { label: "Boy", value: data?.height, icon: <AntDesign name="column-height" size={24} color="white" /> },
+  ];
   
   return (
     <LinearGradient colors={["rgb(41,47,25)", "black"]} style={{ flex: 1 }}>
@@ -67,14 +75,12 @@ const ProfileScreen = () => {
           contentContainerStyle={{
             alignItems: "center",
             paddingTop: topPadding,
-            paddingBottom: topPadding,
-            paddingHorizontal: 20,
           }}
           showsVerticalScrollIndicator={false}
         >
           <TouchableOpacity style={{ marginBottom: 10 }}>
             <Image
-              source={{ uri: data.image }}
+              source={{ uri: data?.image }}
               style={{
                 width: imageSize,
                 height: imageSize,
@@ -150,6 +156,7 @@ const ProfileScreen = () => {
               backgroundColor: "rgb(201, 235, 100)",
               borderRadius: 15,
               padding: 15,
+       
 
               paddingHorizontal: screen.width * 0.1,
             }}
@@ -168,8 +175,22 @@ const ProfileScreen = () => {
               }));
             }}
           />
-        </ScrollView>
+       <View style={styles.container}>
+       {Array.isArray(stats) && stats.map((item, index) => (
+  <View key={item.label || index} style={styles.card}>
+    <Text style={styles.label}>
+      {item.icon} {item.label}
+    </Text>
+    <Text style={styles.value}>
+      {item.value ?? ""}
+    </Text>
+  </View>
+))}
+
+        </View>  </ScrollView>
+       
       </SafeAreaView>
+
       <TouchableOpacity
         style={{
           backgroundColor: "rgb(201, 235, 100)",
@@ -193,6 +214,37 @@ const ProfileScreen = () => {
       </TouchableOpacity>
     </LinearGradient>
   );
+}
+
+const styles = {
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  card: {
+    flex: 1,
+    backgroundColor: "rgb(49,49,49)",
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 15,
+    alignItems: "flex-start",
+    shadowColor: "#000",
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  label: {
+    color: "white",
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  value: {
+    color: "rgb(201,235,100)",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 };
 
-export default ProfileScreen;

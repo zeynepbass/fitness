@@ -1,4 +1,6 @@
 
+
+
 import { View, Text, SafeAreaView, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";

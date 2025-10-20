@@ -16,6 +16,7 @@ import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Register = () => {
   const navigation = useNavigation();
@@ -29,6 +30,7 @@ const Register = () => {
   });
 
   const handleRegister = async () => {
+    await AsyncStorage.clear();
     const { email, confirmEmail, password, confirmPassword, ad, soyad } = formData;
 
     if (!email || !confirmEmail || !password || !confirmPassword || !ad || !soyad) {
@@ -160,7 +162,7 @@ const Register = () => {
 const styles = StyleSheet.create({
   formContainer: {
     width: "90%",
-    backgroundColor: "rgb(26, 38, 19)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,

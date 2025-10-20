@@ -1,4 +1,3 @@
-import { View, Text, ScrollView } from 'react-native';
 
 import { useState, useEffect } from 'react';
 import { View, Dimensions, Text, ScrollView, SafeAreaView } from "react-native";
@@ -51,20 +50,18 @@ export default function ActivityPieChart() {
   return (
     <LinearGradient colors={["rgb(41,47,25)", "black"]} style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1, backgroundColor: "gradient" }}>
-
         <ScrollView
           contentContainerStyle={{
-            
             paddingHorizontal: 20,
             paddingBottom: 40,
           }}
           showsVerticalScrollIndicator={false}
         >
-                  <StepsLimit />
+          <StepsLimit />
           <View
             style={{
               padding: 20,
-              marginTop:10,
+              marginTop: 10,
               borderRadius: 20,
               backgroundColor: "rgba(255,255,255,0.05)",
               shadowColor: "#000",
@@ -87,7 +84,7 @@ export default function ActivityPieChart() {
             </Text>
             <PieChart
               data={data.map((item, index) => ({
-                name: `${item.date}\n${item.steps} adım`,
+                name: `${item.date}`,
                 population: item.steps > 0 ? item.steps : 1,
                 color: colors[index % colors.length],
                 legendFontColor: "#fff",
@@ -129,7 +126,7 @@ export default function ActivityPieChart() {
             </Text>
             <PieChart
               data={data.map((item, index) => ({
-                name: `${item.date}\n${item.calories} cal`,
+                name: `${item.date}`,
                 population: item.calories > 0 ? item.calories : 1,
                 color: colors[index % colors.length],
                 legendFontColor: "#fff",
