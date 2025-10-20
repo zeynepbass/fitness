@@ -11,24 +11,38 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-
-const AppModal = ({ open, setOpen }) => {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {addStepAndCalorie} from "../helper/http"
+const AppModal = ({ open, setOpen,onUpdate }) => {
   const { width, height } = Dimensions.get("window");
   const [formData, setFormData] = useState({
     adim: "",
     kalori: "",
   });
 
-  const handleSave = (formData) => {
-    for (let key in formData){
-      if(!formData[key]){
+  const handleSave = async () => {
+    for (let key in formData) {
+      if (!formData[key]) {
         Alert.alert("Hata", "Lütfen tüm alanları doldurun!");
         return;
       }
     }
-    console.log(formData);
+  
+
+    const stored = await AsyncStorage.getItem("userToken");
+    const userData = stored ? JSON.parse(stored) : null;
+    if (!userData?.email) {
+      Alert.alert("Hata", "Kullanıcı bilgisi bulunamadı!");
+      return;
+    }
+  
+    await addStepAndCalorie(userData.email, formData.adim, formData.kalori);
+    onUpdate(formData.adim, formData.kalori);
     setOpen(false);
+    setFormData( { adim: "",
+      kalori: ""})
   };
+  
 
   return (
     <Modal

@@ -1,6 +1,4 @@
-import { View, Text, Image, Modal, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 
-import { useState, useEffect } from 'react';
 import { useState, useEffect } from 'react';
 import { Text, View, Dimensions, SafeAreaView, ScrollView } from "react-native";
 import { getUserByEmail } from "../../helper/http";

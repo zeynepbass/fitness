@@ -1,5 +1,4 @@
 
-
 import { useState } from 'react';
 import {
   View,
@@ -14,10 +13,9 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { auth, db } from "../../firebase"; 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Register = () => {
   const navigation = useNavigation();
@@ -29,8 +27,6 @@ const Register = () => {
     ad: "",
     soyad: "",
   });
-
-
 
   const handleRegister = async () => {
     await AsyncStorage.clear();
@@ -52,22 +48,27 @@ const Register = () => {
     }
 
     try {
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
 
-      await AsyncStorage.setItem("userToken", user.uid);
+      await updateProfile(user, {
+        displayName: ad + " " + soyad,
+      });
 
 
       await setDoc(doc(db, "users", user.uid), {
         ad,
         soyad,
+        displayName: ad + " " + soyad,
         email,
-        createdAt: new Date(),
+        createdAt: Date.now(),
       });
 
       Alert.alert("Başarılı", "Kayıt tamamlandı!");
-      navigation.replace("HomeMain");
+      navigation.navigate("Login");
+
     } catch (error) {
       console.log(error.message);
       Alert.alert("Hata", error.message);
@@ -106,7 +107,7 @@ const Register = () => {
                 value={formData.email}
                 placeholder="Email"
                 style={styles.input}
-                   autoCapitalize="none"
+                autoCapitalize="none"
                 keyboardType="email-address"
                 placeholderTextColor="white"
                 onChangeText={(text) => setFormData({ ...formData, email: text })}
@@ -115,7 +116,7 @@ const Register = () => {
                 value={formData.confirmEmail}
                 placeholder="Email tekrar"
                 style={styles.input}
-                   autoCapitalize="none"
+                autoCapitalize="none"
                 keyboardType="email-address"
                 placeholderTextColor="white"
                 onChangeText={(text) => setFormData({ ...formData, confirmEmail: text })}
@@ -124,21 +125,28 @@ const Register = () => {
                 value={formData.password}
                 placeholder="Parola"
                 style={styles.input}
-                   autoCapitalize="none"
+                autoCapitalize="none"
                 placeholderTextColor="white"
-          
+                secureTextEntry
                 onChangeText={(text) => setFormData({ ...formData, password: text })}
               />
               <TextInput
                 value={formData.confirmPassword}
                 placeholder="Parola tekrar"
-                   autoCapitalize="none"
                 style={styles.input}
+                autoCapitalize="none"
                 placeholderTextColor="white"
-                
+                secureTextEntry
                 onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
               />
-              <Text style={{color:"rgb(201, 235, 100)", textDecorationLine:"underline",textAlign:"left"}} onPress={()=>navigation.navigate("Login")}>Giriş Yap</Text>
+                     <TouchableOpacity  onPress={()=>navigation.navigate("Login")}>
+              <Text
+                style={{ color: "rgb(201, 235, 100)", textDecorationLine: "underline", textAlign: "left" }}
+
+              >
+                Giriş Yap
+              </Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={handleRegister}>
                 <Text style={styles.buttonText}>Kayıt Ol</Text>
               </TouchableOpacity>
