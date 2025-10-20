@@ -1,5 +1,4 @@
-import { View, Text, ScrollView, Dimensions } from 'react-native';
-import { useState, useEffect } from "react";
+
 import { useState, useEffect } from 'react';
 import { View, Dimensions, Text, ScrollView, SafeAreaView } from "react-native";
 import { PieChart } from "react-native-chart-kit";
