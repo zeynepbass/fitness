@@ -1,3 +1,4 @@
+import { View, Text, ScrollView } from 'react-native';
 
 import { useState, useEffect } from 'react';
 import { View, Dimensions, Text, ScrollView, SafeAreaView } from "react-native";
