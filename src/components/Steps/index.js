@@ -28,7 +28,7 @@ export default function StepCounter({ userEmail }) {
   const stepsRef = useRef(0);
   const lastStepTimeRef = useRef(Date.now());
   const hasNotifiedRef = useRef(false);
-  const lastPedometerValue = useRef(null); // Son gelen adımı hatırlamak için
+  const lastPedometerValue = useRef(null); 
 
   const stepDataKey = `stepData_${userEmail}`;
 

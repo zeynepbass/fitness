@@ -56,6 +56,32 @@ export const getUserByEmail = async () => {
   }
 };
 
+export const getStepsAndCalories = async () => {
+  try {
+    const stored = await AsyncStorage.getItem("userToken");
+    if (!stored) throw new Error("Kullanıcı bulunamadı");
+
+    const user = JSON.parse(stored);
+    const email = user.email || user.user?.email;
+    if (!email) throw new Error("Email bulunamadı");
+
+
+    const dailyStepsCol = collection(db, "users", email, "dailySteps");
+    const snapshot = await getDocs(dailyStepsCol);
+
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    console.log("📊 Firestore'dan gelen günlük adım verileri:", data);
+
+    return data;
+  } catch (error) {
+    console.log("🔥 getStepsAndCalories Hatası:", error);
+    return null;
+  }
+};
 
 export const addStepAndCalories = async (steps, calories, distance) => {
   try {
@@ -112,7 +138,7 @@ export const addDailyNotification = async (email, notification) => {
     });
 
     if (!userDocId) {
-      // Eğer kullanıcı yoksa oluştur
+
       userDocId = email;
       await setDoc(doc(db, "users", userDocId), { email, notifications: [] });
     }

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -9,7 +8,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import {getUserByEmail} from "../helper/http"
+import { getUserByEmail } from "../helper/http";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal";
@@ -36,7 +35,8 @@ const ProfileScreen = () => {
       );
       const fetchUsers = async () => {
         const users = await getUserByEmail();
-        setData(users)
+
+        setData(users);
       };
       fetchUsers();
       return () => subscription?.remove();
@@ -57,6 +57,7 @@ const ProfileScreen = () => {
       alert(error.message);
     }
   };
+  
   return (
     <LinearGradient colors={["rgb(41,47,25)", "black"]} style={{ flex: 1 }}>
       <SafeAreaView
@@ -73,7 +74,7 @@ const ProfileScreen = () => {
         >
           <TouchableOpacity style={{ marginBottom: 10 }}>
             <Image
-              source={{ uri: "https://i.pravatar.cc/150" }}
+              source={{ uri: data.image }}
               style={{
                 width: imageSize,
                 height: imageSize,
@@ -85,10 +86,18 @@ const ProfileScreen = () => {
           <Text style={{ fontSize: 24, color: "white" }}>
             {userToken?.displayName || "Kullanıcı"}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: "bold", color: "white", margin: 10, textAlign: "center" }}>
-  Fitness Hedefi: {data?.calories ? `${data.calories}` : "Adım Girilmedi"}
-</Text>
-
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "bold",
+              color: "white",
+              margin: 10,
+              textAlign: "center",
+            }}
+          >
+            Fitness Hedefi:{" "}
+            {data?.calories ? `${data.calories}` : "Adım Girilmedi"}
+          </Text>
 
           <View
             style={{
@@ -112,7 +121,9 @@ const ProfileScreen = () => {
               }}
             >
               <Text style={{ color: "white" }}>Adım Hedefi</Text>
-              <Text style={{ fontWeight: "bold", color: "white" }}>{data?.steps}</Text>
+              <Text style={{ fontWeight: "bold", color: "white" }}>
+                {data?.steps}
+              </Text>
             </View>
 
             <View
@@ -129,7 +140,7 @@ const ProfileScreen = () => {
             >
               <Text style={{ color: "white" }}>Kalori Hedefi</Text>
               <Text style={{ fontWeight: "bold", color: "white" }}>
-              {data?.calories}
+                {data?.calories}
               </Text>
             </View>
           </View>
@@ -146,9 +157,17 @@ const ProfileScreen = () => {
           >
             <Text style={{ color: "black" }}>Hedefleri Düzenle</Text>
           </TouchableOpacity>
-          <Modal open={open} setOpen={setOpen}  onUpdate={(newadim, newkalori) => {
-setData(prev => ({ ...prev, steps: newadim, calories: newkalori }));
-  }}/>
+          <Modal
+            open={open}
+            setOpen={setOpen}
+            onUpdate={(newadim, newkalori) => {
+              setData((prev) => ({
+                ...prev,
+                steps: newadim,
+                calories: newkalori,
+              }));
+            }}
+          />
         </ScrollView>
       </SafeAreaView>
       <TouchableOpacity
