@@ -1,3 +1,4 @@
+import { View, Text, Modal, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 
 import { useState, useEffect } from 'react';
 import {
