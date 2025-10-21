@@ -1,19 +1,19 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // 🔹 Firestore import
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-dEkUrq58ore9n8Ns2FoEi_2DVbC1_D8",
-  authDomain: "fitness-9b123.firebaseapp.com",
-  projectId: "fitness-9b123",
-  storageBucket: "fitness-9b123.appspot.com",
-  messagingSenderId: "70388884607",
-  appId: "1:70388884607:web:206574c1444233e7350b4a",
-  measurementId: "G-GB5L888ZMX",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export const auth = getAuth(app);
-export const db = getFirestore(app); // 🔹 Firestore db export
+export const db = getFirestore(app);
 export default app;
